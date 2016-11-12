@@ -45,8 +45,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\AudienceNetwork\Library\AdHandler.cs" />
+     <Compile Include="Assets\AudienceNetwork\Library\AdSettings.cs" />
+     <Compile Include="Assets\AudienceNetwork\Library\AdUtility.cs" />
+     <Compile Include="Assets\AudienceNetwork\Library\AdView.cs" />
+     <Compile Include="Assets\AudienceNetwork\Library\InterstitialAd.cs" />
+     <Compile Include="Assets\AudienceNetwork\Library\NativeAd.cs" />
+     <Compile Include="Assets\AudienceNetwork\Library\SdkVersion.cs" />
+     <Compile Include="Assets\AudienceNetwork\Samples\AdViewTest.cs" />
+     <Compile Include="Assets\AudienceNetwork\Samples\InterstitialAdTest.cs" />
+     <Compile Include="Assets\AudienceNetwork\Samples\NativeAdTest.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\GridSpace.cs" />
+     <None Include="Assets\AudienceNetwork\Audience Network README.txt" />
+     <None Include="Assets\AudienceNetwork\Editor\Android\DefaultAndroidManifest.xml" />
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>

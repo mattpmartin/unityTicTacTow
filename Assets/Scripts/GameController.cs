@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using AudienceNetwork;
 
 [System.Serializable]
 public class Player{
@@ -13,6 +14,21 @@ public class Player{
 public class PlayerColour{
 	public Color panelColour;
 	public Color textColour;
+}
+
+[System.Serializable]
+public class NativeAdUnit {
+	[Header("Panel:")]
+	public GameObject container;
+	[Header("Text:")]
+	public Text title;
+	public Text socialContext;
+	[Header("Images:")]
+	public Image coverImage;
+	public Image iconImage;
+	[Header("Buttons:")]
+	public Text callToAction;
+	public Button callToActionButton;
 }
 
 public class GameController : MonoBehaviour {
@@ -45,6 +61,9 @@ public class GameController : MonoBehaviour {
 		gameOverPanel.SetActive (false);
 		restartButton.SetActive (false);
 		moveCount = 0;
+
+		//call load ad function
+		loadAd ();
 	}
 
 	public string GetPlayerSide (){
@@ -163,5 +182,56 @@ public class GameController : MonoBehaviour {
 		playerO.text.color = inactivePlayerColour.textColour;
 		playerX.panel.color = inactivePlayerColour.panelColour;
 		playerX.text.color = inactivePlayerColour.textColour;
+	}
+
+	// ad controlls
+	private NativeAd nativeAd;
+
+	public NativeAdUnit adUnit;
+
+	void loadAd(){
+		//hide the game object while its loading
+		adUnit.container.SetActive (false);
+		
+		// Create a native ad request with a unique placement ID (generate your own on the Facebook app settings).
+		// Use different ID for each ad placement in your app.
+		NativeAd nativeAd = new AudienceNetwork.NativeAd ("681585495338680_681600238670539");
+		this.nativeAd = nativeAd;
+
+		// Wire up GameObject with the native ad; the specified buttons will be clickable.
+		nativeAd.RegisterGameObjectForImpression (adUnit.container, new Button[] { adUnit.callToActionButton });
+
+		// Set delegates to get notified on changes or when the user interacts with the ad.
+		nativeAd.NativeAdDidLoad = (delegate() {
+			Debug.Log ("Native ad loaded.");
+			// Make container visable
+			adUnit.container.SetActive (true);
+			adUnit.title.text = nativeAd.Title;
+			adUnit.socialContext.text = nativeAd.SocialContext;
+			adUnit.callToAction.text = nativeAd.CallToAction;
+			Debug.Log ("Loading images...");
+			StartCoroutine(nativeAd.LoadIconImage(nativeAd.IconImageURL));
+			StartCoroutine(nativeAd.LoadCoverImage(nativeAd.CoverImageURL));
+			Debug.Log ("Images loaded.");
+		});
+		nativeAd.NativeAdDidFailWithError = (delegate(string error) {
+			Debug.Log ("Native ad failed to load with error: " + error);
+		});
+		nativeAd.NativeAdWillLogImpression = (delegate() {
+			Debug.Log ("Native ad logged impression.");
+		});
+		nativeAd.NativeAdDidClick = (delegate() {
+			Debug.Log ("Native ad clicked.");
+		});
+
+		// Initiate a request to load an ad.
+		nativeAd.LoadAd ();
+
+		Debug.Log ("Native ad loading...");
+	}
+
+	void OnGUI () {
+		// Update GUI from native ad
+		adUnit.iconImage.sprite = nativeAd.IconImage;
 	}
 }

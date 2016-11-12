@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 
 Project("{832AD723-F907-F3AB-FB6B-855034DADAD7}") = "Noughts And Crosses", "Assembly-CSharp.csproj", "{C8EB4525-1914-F36E-F8DE-511D3BF79211}"
 EndProject
+Project("{832AD723-F907-F3AB-FB6B-855034DADAD7}") = "Noughts And Crosses", "Assembly-CSharp-Editor.csproj", "{3B688EBD-A21F-95D9-F64A-7F188AF52889}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{C8EB4525-1914-F36E-F8DE-511D3BF79211}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8EB4525-1914-F36E-F8DE-511D3BF79211}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8EB4525-1914-F36E-F8DE-511D3BF79211}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B688EBD-A21F-95D9-F64A-7F188AF52889}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B688EBD-A21F-95D9-F64A-7F188AF52889}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B688EBD-A21F-95D9-F64A-7F188AF52889}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B688EBD-A21F-95D9-F64A-7F188AF52889}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
