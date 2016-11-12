@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Player{
 	public Image panel;
 	public Text text;
+	public Button button;
 }
 
 [System.Serializable]
@@ -26,6 +27,8 @@ public class GameController : MonoBehaviour {
 	public Player playerX;
 	public Player playerO;
 
+	public GameObject startInfo;
+
 	public PlayerColour activePlayerColour;
 	public PlayerColour inactivePlayerColour;
 
@@ -39,12 +42,9 @@ public class GameController : MonoBehaviour {
 
 	void Awake (){
 		SetGameControllersOnButtons ();
-		playerSide = "X";
 		gameOverPanel.SetActive (false);
 		restartButton.SetActive (false);
 		moveCount = 0;
-
-		SetPlayerColours (playerX, playerO);
 	}
 
 	public string GetPlayerSide (){
@@ -83,6 +83,7 @@ public class GameController : MonoBehaviour {
 		if (winningPlayer == "draw")
 		{
 			SetGameOverText("It's a Draw!");
+			SetPlayerColourInactive ();
 		} else
 		{
 			SetGameOverText(winningPlayer + " Wins!");
@@ -106,11 +107,8 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void ResetGame(){
-		playerSide = "X";
 		moveCount = 0;
 		gameOverPanel.SetActive (false);
-
-		SetBoardInteractable (true);
 
 		for (int i = 0; i < buttonList.Length; i++) {
 			buttonList [i].text = "";
@@ -118,7 +116,10 @@ public class GameController : MonoBehaviour {
 
 		restartButton.SetActive (false);
 
-		SetPlayerColours (playerX, playerO);
+		SetPlayerButtons (true);
+		SetPlayerColourInactive ();
+
+		startInfo.SetActive (true);
 	}
 
 	void SetBoardInteractable (bool value){
@@ -133,5 +134,34 @@ public class GameController : MonoBehaviour {
 
 		oldPlayer.panel.color = inactivePlayerColour.panelColour;
 		oldPlayer.text.color = inactivePlayerColour.textColour;
+	}
+
+	public void SetStartingSide (string startingSide){
+		playerSide = startingSide;
+		if (startingSide == "X") {
+			SetPlayerColours (playerX, playerO);
+		} else {
+			SetPlayerColours (playerO, playerX);
+		}
+
+		StartGame ();
+	}
+
+	void StartGame(){
+		SetBoardInteractable (true);
+		SetPlayerButtons (false);
+		startInfo.SetActive (false);
+	}
+
+	void SetPlayerButtons(bool value){
+		playerO.button.interactable = value;
+		playerX.button.interactable = value;
+	}
+
+	void SetPlayerColourInactive() {
+		playerO.panel.color = inactivePlayerColour.panelColour;
+		playerO.text.color = inactivePlayerColour.textColour;
+		playerX.panel.color = inactivePlayerColour.panelColour;
+		playerX.text.color = inactivePlayerColour.textColour;
 	}
 }
